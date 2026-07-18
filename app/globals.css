@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #fbfbfa;
+  --surface: #ffffff;
+  --surface-2: #f4f4f3;
+  --fg: #1a1a19;
+  --muted: #6b6b68;
+  --border: #e6e6e3;
+  --border-strong: #d4d4d0;
+  --accent: #4f46e5;
+  --accent-fg: #ffffff;
+  --ring: #4f46e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0b0c;
+    --surface: #141416;
+    --surface-2: #1c1c1f;
+    --fg: #ededed;
+    --muted: #8a8a8f;
+    --border: #26262a;
+    --border-strong: #34343a;
+    --accent: #6d64f0;
+    --accent-fg: #ffffff;
+    --ring: #6d64f0;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Layered page atmosphere: two soft accent blobs + a faint dotted grid.
+   Restrained — single indigo→violet family, low alpha. */
+body {
+  background-image:
+    radial-gradient(40rem 30rem at 15% -5%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+    radial-gradient(35rem 28rem at 90% 5%, color-mix(in srgb, #8b5cf6 10%, transparent), transparent 55%),
+    radial-gradient(
+      circle at center,
+      color-mix(in srgb, var(--fg) 6%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: auto, auto, 22px 22px;
+  background-position: 0 0, 0 0, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-attachment: fixed;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.text-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--fg) 0%,
+    var(--fg) 40%,
+    var(--accent) 75%,
+    #8b5cf6 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+      transition-colors disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+  .btn-primary:hover {
+    background: color-mix(in srgb, var(--accent) 88%, black);
+  }
+  .btn-ghost {
+    @apply border;
+    border-color: var(--border-strong);
+  }
+  .btn-ghost:hover {
+    background: var(--surface-2);
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    @apply rounded-xl;
+  }
+  /* Interactive tool card: gradient sheen + accent glow on hover. */
+  .tool-card {
+    position: relative;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--fg) 2%, transparent), transparent 40%),
+      var(--surface);
+    border: 1px solid var(--border);
+    @apply overflow-hidden rounded-xl transition-all duration-200;
+  }
+  .tool-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    transform: translateY(-3px);
+    box-shadow:
+      0 1px 0 0 color-mix(in srgb, var(--fg) 4%, transparent) inset,
+      0 18px 40px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .tool-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, color-mix(in srgb, var(--accent) 55%, transparent), transparent 45%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .tool-card:hover::after {
+    opacity: 1;
+  }
+  .icon-tile {
+    background: linear-gradient(140deg, color-mix(in srgb, var(--accent) 22%, var(--surface-2)), var(--surface-2));
+    color: var(--accent);
+    @apply flex items-center justify-center rounded-lg;
+  }
+  .field {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    @apply w-full rounded-lg px-3 py-2.5 text-sm outline-none transition;
+  }
+  .field:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 18%, transparent);
+  }
+}
