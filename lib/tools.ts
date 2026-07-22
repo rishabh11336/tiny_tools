@@ -13,12 +13,11 @@ export const tools: Tool[] = [
   { slug: "pdf/unlock", name: "Remove PDF Password", desc: "Enter the password, download an unlocked PDF.", group: "PDF", ready: true },
   { slug: "qr", name: "QR Code Generator", desc: "Make a QR code from any text or URL.", group: "Utility", ready: true },
 
-  // Planned — Phase 1/2 (see plan)
-  { slug: "image/convert", name: "Convert Image", desc: "PNG ↔ JPG ↔ WebP.", group: "Image", ready: false },
-  { slug: "image/resize", name: "Resize Image", desc: "Scale images to any dimension.", group: "Image", ready: false },
-  { slug: "pdf/split", name: "Split PDF", desc: "Extract or delete pages.", group: "PDF", ready: false },
-  { slug: "pdf/images-to-pdf", name: "Images → PDF", desc: "Turn images into a PDF.", group: "PDF", ready: false },
-  { slug: "svg/optimize", name: "Optimize SVG", desc: "Minify SVG with SVGO.", group: "SVG", ready: false },
+  { slug: "image/convert", name: "Convert Image", desc: "PNG ↔ JPG ↔ WebP.", group: "Image", ready: true },
+  { slug: "image/resize", name: "Resize Image", desc: "Scale images to any dimension.", group: "Image", ready: true },
+  { slug: "pdf/split", name: "Split PDF", desc: "Extract or delete pages.", group: "PDF", ready: true },
+  { slug: "pdf/images-to-pdf", name: "Images → PDF", desc: "Turn images into a PDF.", group: "PDF", ready: true },
+  { slug: "svg/optimize", name: "Optimize SVG", desc: "Strip comments, metadata & whitespace.", group: "SVG", ready: true },
 ];
 
 export const groups = ["Image", "PDF", "SVG", "Audio", "Video", "Utility"] as const;
