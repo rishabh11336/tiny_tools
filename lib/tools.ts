@@ -24,14 +24,14 @@ export const tools: Tool[] = [
   { slug: "image/crop", name: "Crop Image", desc: "Trim to a selected area.", group: "Image", ready: true },
   { slug: "image/rotate", name: "Rotate / Flip Image", desc: "Turn or mirror an image.", group: "Image", ready: true },
   { slug: "image/remove-bg", name: "Remove Background", desc: "Erase the background in-browser.", group: "Image", ready: false },
-  { slug: "image/palette", name: "Color Palette", desc: "Extract dominant colors.", group: "Image", ready: false },
-  { slug: "image/exif", name: "Strip EXIF", desc: "Remove metadata for privacy.", group: "Image", ready: false },
-  { slug: "image/favicon", name: "Favicon Generator", desc: "Build a multi-size .ico.", group: "Image", ready: false },
+  { slug: "image/palette", name: "Color Palette", desc: "Extract dominant colors.", group: "Image", ready: true },
+  { slug: "image/exif", name: "Strip EXIF", desc: "Remove metadata for privacy.", group: "Image", ready: true },
+  { slug: "image/favicon", name: "Favicon Generator", desc: "Build a multi-size .ico.", group: "Image", ready: true },
   // PDF
   { slug: "pdf/to-images", name: "PDF → Images", desc: "Render pages to PNG.", group: "PDF", ready: true },
   { slug: "pdf/rotate", name: "Rotate PDF", desc: "Turn pages 90/180/270°.", group: "PDF", ready: true },
   { slug: "pdf/extract-text", name: "Extract PDF Text", desc: "Pull plain text from a PDF.", group: "PDF", ready: true },
-  { slug: "pdf/compress", name: "Compress PDF", desc: "Shrink PDF file size.", group: "PDF", ready: false },
+  { slug: "pdf/compress", name: "Compress PDF", desc: "Shrink PDF file size.", group: "PDF", ready: true },
   // Utility
   { slug: "text/hash", name: "Hash Generator", desc: "SHA-1 / 256 / 512 of any text.", group: "Utility", ready: true },
   { slug: "text/base64", name: "Base64 Encode/Decode", desc: "Text ↔ Base64.", group: "Utility", ready: true },
@@ -41,7 +41,7 @@ export const tools: Tool[] = [
   { slug: "text/password", name: "Password Generator", desc: "Strong random passwords.", group: "Utility", ready: true },
   { slug: "text/count", name: "Word & Char Counter", desc: "Count words, characters, lines.", group: "Utility", ready: true },
   { slug: "text/case", name: "Case Converter", desc: "UPPER / lower / Title / camel.", group: "Utility", ready: true },
-  { slug: "qr/read", name: "QR Reader", desc: "Scan a QR code from an image.", group: "Utility", ready: false },
+  { slug: "qr/read", name: "QR Reader", desc: "Scan a QR code from an image.", group: "Utility", ready: true },
   // Audio / Video (ffmpeg.wasm, lazy-loaded)
   { slug: "audio/extract", name: "Extract Audio", desc: "Pull audio out of a video.", group: "Audio", ready: false },
   { slug: "audio/convert", name: "Convert Audio", desc: "MP3 / WAV / OGG.", group: "Audio", ready: false },
