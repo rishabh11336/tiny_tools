@@ -21,16 +21,16 @@ export const tools: Tool[] = [
 
   // Planned — see ROADMAP.md. All client-side.
   // Image
-  { slug: "image/crop", name: "Crop Image", desc: "Trim to a selected area.", group: "Image", ready: false },
-  { slug: "image/rotate", name: "Rotate / Flip Image", desc: "Turn or mirror an image.", group: "Image", ready: false },
+  { slug: "image/crop", name: "Crop Image", desc: "Trim to a selected area.", group: "Image", ready: true },
+  { slug: "image/rotate", name: "Rotate / Flip Image", desc: "Turn or mirror an image.", group: "Image", ready: true },
   { slug: "image/remove-bg", name: "Remove Background", desc: "Erase the background in-browser.", group: "Image", ready: false },
   { slug: "image/palette", name: "Color Palette", desc: "Extract dominant colors.", group: "Image", ready: false },
   { slug: "image/exif", name: "Strip EXIF", desc: "Remove metadata for privacy.", group: "Image", ready: false },
   { slug: "image/favicon", name: "Favicon Generator", desc: "Build a multi-size .ico.", group: "Image", ready: false },
   // PDF
-  { slug: "pdf/to-images", name: "PDF → Images", desc: "Render pages to PNG.", group: "PDF", ready: false },
-  { slug: "pdf/rotate", name: "Rotate PDF", desc: "Turn pages 90/180/270°.", group: "PDF", ready: false },
-  { slug: "pdf/extract-text", name: "Extract PDF Text", desc: "Pull plain text from a PDF.", group: "PDF", ready: false },
+  { slug: "pdf/to-images", name: "PDF → Images", desc: "Render pages to PNG.", group: "PDF", ready: true },
+  { slug: "pdf/rotate", name: "Rotate PDF", desc: "Turn pages 90/180/270°.", group: "PDF", ready: true },
+  { slug: "pdf/extract-text", name: "Extract PDF Text", desc: "Pull plain text from a PDF.", group: "PDF", ready: true },
   { slug: "pdf/compress", name: "Compress PDF", desc: "Shrink PDF file size.", group: "PDF", ready: false },
   // Utility
   { slug: "text/hash", name: "Hash Generator", desc: "SHA-1 / 256 / 512 of any text.", group: "Utility", ready: true },
