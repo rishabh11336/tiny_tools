@@ -43,6 +43,26 @@ export default function CompressImage() {
 
   return (
     <ToolShell title="Compress Image" desc="Reduce JPG / PNG / WebP file size. Runs locally.">
+      <div className="mb-3 flex flex-wrap gap-2">
+        {[
+          { l: "Web", q: 0.8 },
+          { l: "Balanced", q: 0.6 },
+          { l: "Small", q: 0.4 },
+        ].map((p) => (
+          <button
+            key={p.l}
+            onClick={() => setQuality(p.q)}
+            className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+              quality === p.q
+                ? "border-accent text-accent"
+                : "border-border-strong text-muted hover:text-fg"
+            }`}
+          >
+            {p.l} · {Math.round(p.q * 100)}%
+          </button>
+        ))}
+      </div>
+
       <label className="mb-4 flex items-center gap-3 text-sm">
         <span className="text-muted">Quality</span>
         <input

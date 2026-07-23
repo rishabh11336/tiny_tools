@@ -36,7 +36,16 @@ export default function Dropzone({ accept, multiple, onFiles, label }: Props) {
 
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label={label ?? "Drop files here or click to browse"}
       onClick={() => inputRef.current?.click()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          inputRef.current?.click();
+        }
+      }}
       onDragOver={(e) => {
         e.preventDefault();
         setOver(true);
