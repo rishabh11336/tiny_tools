@@ -18,6 +18,35 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   image; non-JPG/PNG re-encoded to PNG via canvas (pdf-lib).
 - **Optimize SVG** (`/svg/optimize`) — strip comments, editor metadata and
   whitespace, before/after size report. Regex minify, not full SVGO.
+- **Crop / Rotate / Flip Image** (`/image/crop`, `/image/rotate`) — drag-select
+  crop and 90°/mirror transforms (canvas).
+- **Color Palette** (`/image/palette`) — extract dominant colors, click to copy.
+- **Strip EXIF** (`/image/exif`) — remove camera/GPS/timestamp metadata by
+  re-encoding (canvas).
+- **Favicon Generator** (`/image/favicon`) — multi-size `favicon.ico` (16/32/48),
+  hand-packed ICO.
+- **Remove Background** (`/image/remove-bg`) — in-browser matting
+  (`@imgly/background-removal`, model lazy-loaded on first use).
+- **PDF → Images** (`/pdf/to-images`) and **Extract PDF Text**
+  (`/pdf/extract-text`) — render pages to PNG / pull selectable text (mupdf).
+- **Rotate PDF** (`/pdf/rotate`) — 90/180/270° (pdf-lib).
+- **Compress PDF** (`/pdf/compress`) — GC unused objects + compress streams
+  (mupdf); keeps the original if already optimized.
+- **Text utilities** — Hash (`/text/hash`, SubtleCrypto), Base64 (`/text/base64`),
+  URL encode (`/text/url`), JSON formatter (`/text/json`), UUID (`/text/uuid`),
+  Password (`/text/password`), Word/Char counter (`/text/count`), Case converter
+  (`/text/case`). Pure browser APIs, no deps.
+- **QR Reader** (`/qr/read`) — decode a QR from an image (native `BarcodeDetector`).
+- **Audio: Extract / Convert** (`/audio/extract`, `/audio/convert`) and
+  **Video: → GIF / Trim / Compress** (`/video/to-gif`, `/video/trim`,
+  `/video/compress`) — `ffmpeg.wasm` single-threaded core, lazy-loaded from CDN
+  on first use (no COOP/COEP headers, GA4 untouched).
+
+### Notes
+
+- Two new heavy deps are lazy-loaded per-tool only: `ffmpeg.wasm` (audio/video)
+  and `@imgly/background-removal` (remove-bg). The home page and all other tools
+  stay light. Processing remains fully client-side.
 
 ## [0.1.0] - 2026-07-19
 

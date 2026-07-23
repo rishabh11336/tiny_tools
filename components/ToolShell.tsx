@@ -1,6 +1,6 @@
-import Link from "next/link";
+import ToolBar from "@/components/ToolBar";
 
-// Wraps a tool page: back link, title, description, framed work area.
+// Wraps a tool page: back link + favorite, title, description, work area.
 export default function ToolShell({
   title,
   desc,
@@ -12,9 +12,7 @@ export default function ToolShell({
 }) {
   return (
     <div className="mx-auto max-w-2xl">
-      <Link href="/" className="text-xs text-muted transition-colors hover:text-fg">
-        ← all tools
-      </Link>
+      <ToolBar />
       <h1 className="text-gradient mt-4 text-3xl font-semibold tracking-tight">{title}</h1>
       <p className="mt-2 text-sm leading-relaxed text-muted">{desc}</p>
       <div className="card mt-7 bg-surface/60 p-6 backdrop-blur sm:p-7">{children}</div>

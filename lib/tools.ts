@@ -18,6 +18,60 @@ export const tools: Tool[] = [
   { slug: "pdf/split", name: "Split PDF", desc: "Extract or delete pages.", group: "PDF", ready: true },
   { slug: "pdf/images-to-pdf", name: "Images → PDF", desc: "Turn images into a PDF.", group: "PDF", ready: true },
   { slug: "svg/optimize", name: "Optimize SVG", desc: "Strip comments, metadata & whitespace.", group: "SVG", ready: true },
+
+  // Planned — see ROADMAP.md. All client-side.
+  // Image
+  { slug: "image/crop", name: "Crop Image", desc: "Trim to a selected area.", group: "Image", ready: true },
+  { slug: "image/rotate", name: "Rotate / Flip Image", desc: "Turn or mirror an image.", group: "Image", ready: true },
+  { slug: "image/remove-bg", name: "Remove Background", desc: "Erase the background in-browser.", group: "Image", ready: true },
+  { slug: "image/palette", name: "Color Palette", desc: "Extract dominant colors.", group: "Image", ready: true },
+  { slug: "image/exif", name: "Strip EXIF", desc: "Remove metadata for privacy.", group: "Image", ready: true },
+  { slug: "image/favicon", name: "Favicon Generator", desc: "Build a multi-size .ico.", group: "Image", ready: true },
+  // PDF
+  { slug: "pdf/to-images", name: "PDF → Images", desc: "Render pages to PNG.", group: "PDF", ready: true },
+  { slug: "pdf/rotate", name: "Rotate PDF", desc: "Turn pages 90/180/270°.", group: "PDF", ready: true },
+  { slug: "pdf/extract-text", name: "Extract PDF Text", desc: "Pull plain text from a PDF.", group: "PDF", ready: true },
+  { slug: "pdf/compress", name: "Compress PDF", desc: "Shrink PDF file size.", group: "PDF", ready: true },
+  // Utility
+  { slug: "text/hash", name: "Hash Generator", desc: "SHA-1 / 256 / 512 of any text.", group: "Utility", ready: true },
+  { slug: "text/base64", name: "Base64 Encode/Decode", desc: "Text ↔ Base64.", group: "Utility", ready: true },
+  { slug: "text/url", name: "URL Encode/Decode", desc: "Escape or unescape URLs.", group: "Utility", ready: true },
+  { slug: "text/json", name: "JSON Formatter", desc: "Pretty-print & validate JSON.", group: "Utility", ready: true },
+  { slug: "text/uuid", name: "UUID Generator", desc: "Random v4 UUIDs.", group: "Utility", ready: true },
+  { slug: "text/password", name: "Password Generator", desc: "Strong random passwords.", group: "Utility", ready: true },
+  { slug: "text/count", name: "Word & Char Counter", desc: "Count words, characters, lines.", group: "Utility", ready: true },
+  { slug: "text/case", name: "Case Converter", desc: "UPPER / lower / Title / camel.", group: "Utility", ready: true },
+  { slug: "qr/read", name: "QR Reader", desc: "Scan a QR code from an image.", group: "Utility", ready: true },
+  // Audio / Video (ffmpeg.wasm, lazy-loaded)
+  { slug: "audio/extract", name: "Extract Audio", desc: "Pull audio out of a video.", group: "Audio", ready: true },
+  { slug: "audio/convert", name: "Convert Audio", desc: "MP3 / WAV / OGG.", group: "Audio", ready: true },
+  { slug: "video/to-gif", name: "Video → GIF", desc: "Turn a clip into a GIF.", group: "Video", ready: true },
+  { slug: "video/trim", name: "Trim Video", desc: "Cut a clip to a range.", group: "Video", ready: true },
+  { slug: "video/compress", name: "Compress Video", desc: "Shrink video file size.", group: "Video", ready: true },
 ];
 
 export const groups = ["Image", "PDF", "SVG", "Audio", "Video", "Utility"] as const;
+
+// Canonical origin for sitemap/robots/OG. Override per deploy with
+// NEXT_PUBLIC_SITE_URL; the fallback is a placeholder — set the env in prod.
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://tiny-tools.vercel.app"
+).replace(/\/$/, "");
+
+// Per-route SEO metadata, generated from the registry. Consumed by the tiny
+// server layout.tsx in each tool folder (tool pages are client components and
+// can't export metadata themselves).
+export function toolMeta(slug: string) {
+  const t = tools.find((x) => x.slug === slug);
+  const name = t?.name ?? "tiny tools";
+  const desc = `${t?.desc ?? ""} Free, private — runs entirely in your browser, nothing uploaded.`.trim();
+  const title = `${name} — free & private, in your browser · tiny tools`;
+  const url = `${SITE_URL}/${slug}`;
+  return {
+    title,
+    description: desc,
+    alternates: { canonical: url },
+    openGraph: { title, description: desc, url, type: "website" },
+    twitter: { card: "summary_large_image" as const, title, description: desc },
+  };
+}

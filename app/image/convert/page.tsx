@@ -2,8 +2,11 @@
 import { useState } from "react";
 import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
+import SendTo from "@/components/SendTo";
+import { downloadZip } from "@/lib/zip";
+import { useHandoff } from "@/lib/handoff";
 
-type Fmt = "png" | "jpeg" | "webp";
+type Fmt = "png" | "jpeg" | "webp" | "avif";
 type Row = { name: string; url: string };
 
 const mime = (f: Fmt) => `image/${f}`;
@@ -53,6 +56,8 @@ export default function ConvertImage() {
     setBusy(false);
   }
 
+  useHandoff(run);
+
   return (
     <ToolShell title="Convert Image" desc="PNG ↔ JPG ↔ WebP. Runs locally, nothing uploaded.">
       <label className="mb-4 flex items-center gap-3 text-sm">
@@ -63,19 +68,42 @@ export default function ConvertImage() {
           className="field w-auto"
         >
           <option value="webp">WebP</option>
+          <option value="avif">AVIF</option>
           <option value="png">PNG</option>
           <option value="jpeg">JPG</option>
         </select>
       </label>
+      {fmt === "avif" && (
+        <p className="mb-4 text-xs text-muted">
+          AVIF gives the smallest files but encodes slowly and needs a recent browser.
+        </p>
+      )}
 
       <Dropzone accept="image/*" multiple onFiles={run} label="Drop images or click to browse" />
       {busy && <p className="mt-4 text-sm text-muted">Converting…</p>}
 
+      {rows.length > 1 && (
+        <button
+          onClick={() => downloadZip(`converted-${fmt}.zip`, rows)}
+          className="btn btn-ghost mt-6 w-full"
+        >
+          Download all ({rows.length}) as .zip
+        </button>
+      )}
+
       {rows.length > 0 && (
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-4 space-y-2">
           {rows.map((r, i) => (
-            <li key={i} className="card flex items-center justify-between gap-3 p-3 text-sm">
-              <span className="truncate">{r.name}</span>
+            <li key={i} className="card flex flex-wrap items-center justify-between gap-3 p-3 text-sm">
+              <span className="min-w-0 flex-1 truncate">{r.name}</span>
+              <SendTo
+                url={r.url}
+                name={r.name}
+                targets={[
+                  { slug: "image/compress", label: "Compress" },
+                  { slug: "image/resize", label: "Resize" },
+                ]}
+              />
               <a href={r.url} download={r.name} className="btn btn-primary shrink-0 px-3 py-1.5">
                 Save
               </a>
