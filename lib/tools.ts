@@ -57,3 +57,21 @@ export const groups = ["Image", "PDF", "SVG", "Audio", "Video", "Utility"] as co
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://tiny-tools.vercel.app"
 ).replace(/\/$/, "");
+
+// Per-route SEO metadata, generated from the registry. Consumed by the tiny
+// server layout.tsx in each tool folder (tool pages are client components and
+// can't export metadata themselves).
+export function toolMeta(slug: string) {
+  const t = tools.find((x) => x.slug === slug);
+  const name = t?.name ?? "tiny tools";
+  const desc = `${t?.desc ?? ""} Free, private — runs entirely in your browser, nothing uploaded.`.trim();
+  const title = `${name} — free & private, in your browser · tiny tools`;
+  const url = `${SITE_URL}/${slug}`;
+  return {
+    title,
+    description: desc,
+    alternates: { canonical: url },
+    openGraph: { title, description: desc, url, type: "website" },
+    twitter: { card: "summary_large_image" as const, title, description: desc },
+  };
+}
