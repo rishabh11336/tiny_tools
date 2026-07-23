@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { tools, groups } from "@/lib/tools";
 import Icon from "@/components/Icon";
+import QuickAccess from "@/components/QuickAccess";
 
 const trust = [
   { t: "100% private", d: "Files never leave your device" },
@@ -37,6 +38,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <QuickAccess />
 
       {/* Tool groups */}
       {groups.map((g) => {

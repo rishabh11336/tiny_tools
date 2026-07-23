@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Props = {
   accept?: string;
@@ -20,6 +20,19 @@ export default function Dropzone({ accept, multiple, onFiles, label }: Props) {
     },
     [onFiles],
   );
+
+  // Paste files from the clipboard (e.g. a screenshot) straight into the tool.
+  useEffect(() => {
+    function onPaste(e: ClipboardEvent) {
+      const files = Array.from(e.clipboardData?.files ?? []);
+      if (files.length) {
+        e.preventDefault();
+        onFiles(multiple ? files : files.slice(0, 1));
+      }
+    }
+    window.addEventListener("paste", onPaste);
+    return () => window.removeEventListener("paste", onPaste);
+  }, [onFiles, multiple]);
 
   return (
     <div
@@ -67,6 +80,7 @@ export default function Dropzone({ accept, multiple, onFiles, label }: Props) {
       <p className="text-sm text-muted">
         {label ?? "Drop files here or click to browse"}
       </p>
+      <p className="text-xs text-muted/70">or paste from clipboard</p>
     </div>
   );
 }
