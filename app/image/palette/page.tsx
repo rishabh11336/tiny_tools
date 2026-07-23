@@ -37,27 +37,62 @@ async function extract(file: File, n = 8): Promise<string[]> {
     .map((c) => hex(Math.round(c.r / c.n), Math.round(c.g / c.n), Math.round(c.b / c.n)));
 }
 
+const rgb = (h: string) => {
+  const n = parseInt(h.slice(1), 16);
+  return `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`;
+};
+
+const asCss = (cs: string[]) =>
+  `:root {\n${cs.map((c, i) => `  --color-${i + 1}: ${c};`).join("\n")}\n}`;
+const asTailwind = (cs: string[]) =>
+  `colors: {\n${cs.map((c, i) => `  'brand-${i + 1}': '${c}',`).join("\n")}\n}`;
+
 export default function PaletteTool() {
   const [colors, setColors] = useState<string[]>([]);
+  const [toast, setToast] = useState("");
+
+  function copy(text: string, note: string) {
+    navigator.clipboard.writeText(text);
+    setToast(note);
+    setTimeout(() => setToast(""), 1200);
+  }
 
   return (
     <ToolShell title="Color Palette" desc="Extract the dominant colors from an image. Runs locally.">
       <Dropzone accept="image/*" onFiles={async (f) => setColors(await extract(f[0]))} label="Drop an image or click to browse" />
 
       {colors.length > 0 && (
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {colors.map((c) => (
-            <button
-              key={c}
-              onClick={() => navigator.clipboard.writeText(c)}
-              title="Click to copy"
-              className="card overflow-hidden p-0 text-left"
-            >
-              <span className="block h-16" style={{ background: c }} />
-              <span className="block p-2 text-center text-xs tabular-nums">{c}</span>
+        <>
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {colors.map((c) => (
+              <button
+                key={c}
+                onClick={() => copy(c, `Copied ${c}`)}
+                title={`${c} · ${rgb(c)} — click to copy hex`}
+                className="card overflow-hidden p-0 text-left"
+              >
+                <span className="block h-16" style={{ background: c }} />
+                <span className="block p-2 text-center text-xs tabular-nums">{c}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <button onClick={() => copy(colors.join(", "), "Copied all hex")} className="btn btn-ghost px-3 py-1.5 text-xs">
+              Copy hex
             </button>
-          ))}
-        </div>
+            <button onClick={() => copy(colors.map(rgb).join(", "), "Copied RGB")} className="btn btn-ghost px-3 py-1.5 text-xs">
+              Copy RGB
+            </button>
+            <button onClick={() => copy(asCss(colors), "Copied CSS vars")} className="btn btn-ghost px-3 py-1.5 text-xs">
+              CSS vars
+            </button>
+            <button onClick={() => copy(asTailwind(colors), "Copied Tailwind")} className="btn btn-ghost px-3 py-1.5 text-xs">
+              Tailwind
+            </button>
+            {toast && <span className="text-xs text-accent">{toast}</span>}
+          </div>
+        </>
       )}
     </ToolShell>
   );
