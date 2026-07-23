@@ -51,3 +51,9 @@ export const tools: Tool[] = [
 ];
 
 export const groups = ["Image", "PDF", "SVG", "Audio", "Video", "Utility"] as const;
+
+// Canonical origin for sitemap/robots/OG. Override per deploy with
+// NEXT_PUBLIC_SITE_URL; the fallback is a placeholder — set the env in prod.
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://tiny-tools.vercel.app"
+).replace(/\/$/, "");

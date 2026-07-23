@@ -4,6 +4,7 @@ import imageCompression from "browser-image-compression";
 import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
 import Compare from "@/components/Compare";
+import { downloadZip } from "@/lib/zip";
 
 type Row = { name: string; before: number; after: number; url: string; origUrl: string };
 
@@ -66,8 +67,22 @@ export default function CompressImage() {
         </div>
       )}
 
+      {rows.length > 1 && (
+        <button
+          onClick={() =>
+            downloadZip(
+              "compressed-images.zip",
+              rows.map((r) => ({ name: `compressed-${r.name}`, url: r.url })),
+            )
+          }
+          className="btn btn-ghost mt-6 w-full"
+        >
+          Download all ({rows.length}) as .zip
+        </button>
+      )}
+
       {rows.length > 0 && (
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-4 space-y-2">
           {rows.map((r, i) => {
             const pct = r.before ? Math.round((1 - r.after / r.before) * 100) : 0;
             return (

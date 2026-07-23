@@ -13,8 +13,10 @@
   --ring: #4f46e5;
 }
 
+/* Dark tokens live in one place; applied via OS preference OR a forced
+   [data-theme] set by the toggle. Keep the three blocks in sync. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0b0b0c;
     --surface: #141416;
     --surface-2: #1c1c1f;
@@ -26,6 +28,19 @@
     --accent-fg: #ffffff;
     --ring: #6d64f0;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0b0c;
+  --surface: #141416;
+  --surface-2: #1c1c1f;
+  --fg: #ededed;
+  --muted: #8a8a8f;
+  --border: #26262a;
+  --border-strong: #34343a;
+  --accent: #6d64f0;
+  --accent-fg: #ffffff;
+  --ring: #6d64f0;
 }
 
 @theme inline {

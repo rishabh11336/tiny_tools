@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
+import { downloadZip } from "@/lib/zip";
 
 type Fmt = "png" | "jpeg" | "webp";
 type Row = { name: string; url: string };
@@ -71,8 +72,17 @@ export default function ConvertImage() {
       <Dropzone accept="image/*" multiple onFiles={run} label="Drop images or click to browse" />
       {busy && <p className="mt-4 text-sm text-muted">Converting…</p>}
 
+      {rows.length > 1 && (
+        <button
+          onClick={() => downloadZip(`converted-${fmt}.zip`, rows)}
+          className="btn btn-ghost mt-6 w-full"
+        >
+          Download all ({rows.length}) as .zip
+        </button>
+      )}
+
       {rows.length > 0 && (
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-4 space-y-2">
           {rows.map((r, i) => (
             <li key={i} className="card flex items-center justify-between gap-3 p-3 text-sm">
               <span className="truncate">{r.name}</span>
