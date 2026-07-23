@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SITE_URL } from "@/lib/tools";
 import CommandPalette from "@/components/CommandPalette";
 import ThemeToggle from "@/components/ThemeToggle";
+import SWRegister from "@/components/SWRegister";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </Script>
       </head>
       <body className="min-h-full flex flex-col">
+        <SWRegister />
         <header className="sticky top-0 z-10 border-b border-border bg-bg/80 backdrop-blur">
           <div className="mx-auto max-w-5xl px-5 h-14 flex items-center justify-between">
             <Link href="/" className="font-mono text-sm font-semibold tracking-tight">
