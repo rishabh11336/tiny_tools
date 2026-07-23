@@ -4,7 +4,7 @@ import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
 import { downloadZip } from "@/lib/zip";
 
-type Fmt = "png" | "jpeg" | "webp";
+type Fmt = "png" | "jpeg" | "webp" | "avif";
 type Row = { name: string; url: string };
 
 const mime = (f: Fmt) => `image/${f}`;
@@ -64,10 +64,16 @@ export default function ConvertImage() {
           className="field w-auto"
         >
           <option value="webp">WebP</option>
+          <option value="avif">AVIF</option>
           <option value="png">PNG</option>
           <option value="jpeg">JPG</option>
         </select>
       </label>
+      {fmt === "avif" && (
+        <p className="mb-4 text-xs text-muted">
+          AVIF gives the smallest files but encodes slowly and needs a recent browser.
+        </p>
+      )}
 
       <Dropzone accept="image/*" multiple onFiles={run} label="Drop images or click to browse" />
       {busy && <p className="mt-4 text-sm text-muted">Converting…</p>}

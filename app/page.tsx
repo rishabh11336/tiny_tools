@@ -9,6 +9,17 @@ const trust = [
   { t: "Instant", d: "Runs on your own hardware" },
 ];
 
+// Per-group accent along one indigo→violet→teal arc — cards + icons inherit
+// it via the --accent var, making groups scannable without new brand colors.
+const groupAccent: Record<string, string> = {
+  Image: "#8b5cf6",
+  PDF: "#4f46e5",
+  SVG: "#0891b2",
+  Audio: "#0d9488",
+  Video: "#c026d3",
+  Utility: "#6366f1",
+};
+
 export default function Home() {
   const ready = tools.filter((t) => t.ready).length;
 
@@ -46,7 +57,11 @@ export default function Home() {
         const items = tools.filter((t) => t.group === g);
         if (items.length === 0) return null;
         return (
-          <section key={g} className="mt-12">
+          <section
+            key={g}
+            className="mt-12"
+            style={{ "--accent": groupAccent[g] } as React.CSSProperties}
+          >
             <div className="mb-4 flex items-center gap-2.5 text-muted">
               <span className="icon-tile h-6 w-6">
                 <Icon name={g} className="h-3.5 w-3.5" />
