@@ -3,8 +3,9 @@ import { useState } from "react";
 import imageCompression from "browser-image-compression";
 import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
+import Compare from "@/components/Compare";
 
-type Row = { name: string; before: number; after: number; url: string };
+type Row = { name: string; before: number; after: number; url: string; origUrl: string };
 
 const kb = (b: number) => `${(b / 1024).toFixed(0)} KB`;
 
@@ -24,7 +25,13 @@ export default function CompressImage() {
           initialQuality: quality,
           useWebWorker: true,
         });
-        out.push({ name: f.name, before: f.size, after: c.size, url: URL.createObjectURL(c) });
+        out.push({
+          name: f.name,
+          before: f.size,
+          after: c.size,
+          url: URL.createObjectURL(c),
+          origUrl: URL.createObjectURL(f),
+        });
       } catch {
         // skip unreadable file
       }
@@ -51,6 +58,13 @@ export default function CompressImage() {
 
       <Dropzone accept="image/*" multiple onFiles={run} label="Drop images or click to browse" />
       {busy && <p className="mt-4 text-sm text-muted">Compressing…</p>}
+
+      {rows[0] && (
+        <div className="mt-6">
+          <p className="mb-2 text-xs text-muted">Drag to compare — {rows[0].name}</p>
+          <Compare before={rows[0].origUrl} after={rows[0].url} alt={rows[0].name} />
+        </div>
+      )}
 
       {rows.length > 0 && (
         <ul className="mt-6 space-y-2">

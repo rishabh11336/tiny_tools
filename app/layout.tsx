@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import CommandPalette from "@/components/CommandPalette";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -27,10 +28,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <Link href="/" className="font-mono text-sm font-semibold tracking-tight">
               tiny<span className="text-accent">/</span>tools
             </Link>
-            <span className="flex items-center gap-1.5 text-xs text-muted">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              runs in your browser
-            </span>
+            <div className="flex items-center gap-3">
+              <CommandPalette />
+              <span className="hidden items-center gap-1.5 text-xs text-muted sm:flex">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                runs in your browser
+              </span>
+            </div>
           </div>
         </header>
         <main className="flex-1 mx-auto w-full max-w-5xl px-5 py-10">{children}</main>

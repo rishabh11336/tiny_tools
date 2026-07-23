@@ -38,6 +38,12 @@ const paths: Record<string, React.ReactNode> = {
       <path d="M14.7 6.3a4 4 0 0 0-5.6 5.6l-6.4 6.4a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l6.4-6.4a4 4 0 0 0 5.6-5.6l-2.7 2.7-2.1-.6-.6-2.1 2.4-2.4Z" />
     </>
   ),
+  Search: (
+    <>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m21 21-4.3-4.3" />
+    </>
+  ),
 };
 
 export default function Icon({ name, className = "" }: { name: string; className?: string }) {
