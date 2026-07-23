@@ -4,7 +4,9 @@ import imageCompression from "browser-image-compression";
 import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
 import Compare from "@/components/Compare";
+import SendTo from "@/components/SendTo";
 import { downloadZip } from "@/lib/zip";
+import { useHandoff } from "@/lib/handoff";
 
 type Row = { name: string; before: number; after: number; url: string; origUrl: string };
 
@@ -40,6 +42,8 @@ export default function CompressImage() {
     setRows((r) => [...out, ...r]);
     setBusy(false);
   }
+
+  useHandoff(run);
 
   return (
     <ToolShell title="Compress Image" desc="Reduce JPG / PNG / WebP file size. Runs locally.">
@@ -108,13 +112,21 @@ export default function CompressImage() {
             return (
               <li
                 key={i}
-                className="card flex items-center justify-between gap-3 p-3 text-sm"
+                className="card flex flex-wrap items-center justify-between gap-3 p-3 text-sm"
               >
-                <span className="truncate">{r.name}</span>
+                <span className="min-w-0 flex-1 truncate">{r.name}</span>
                 <span className="shrink-0 text-muted">
                   {kb(r.before)} → {kb(r.after)}{" "}
                   <span className="text-emerald-600 dark:text-emerald-400">−{pct}%</span>
                 </span>
+                <SendTo
+                  url={r.url}
+                  name={r.name}
+                  targets={[
+                    { slug: "image/convert", label: "Convert" },
+                    { slug: "image/resize", label: "Resize" },
+                  ]}
+                />
                 <a
                   href={r.url}
                   download={`compressed-${r.name}`}

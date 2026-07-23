@@ -2,7 +2,9 @@
 import { useState } from "react";
 import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
+import SendTo from "@/components/SendTo";
 import { downloadZip } from "@/lib/zip";
+import { useHandoff } from "@/lib/handoff";
 
 type Fmt = "png" | "jpeg" | "webp" | "avif";
 type Row = { name: string; url: string };
@@ -54,6 +56,8 @@ export default function ConvertImage() {
     setBusy(false);
   }
 
+  useHandoff(run);
+
   return (
     <ToolShell title="Convert Image" desc="PNG ↔ JPG ↔ WebP. Runs locally, nothing uploaded.">
       <label className="mb-4 flex items-center gap-3 text-sm">
@@ -90,8 +94,16 @@ export default function ConvertImage() {
       {rows.length > 0 && (
         <ul className="mt-4 space-y-2">
           {rows.map((r, i) => (
-            <li key={i} className="card flex items-center justify-between gap-3 p-3 text-sm">
-              <span className="truncate">{r.name}</span>
+            <li key={i} className="card flex flex-wrap items-center justify-between gap-3 p-3 text-sm">
+              <span className="min-w-0 flex-1 truncate">{r.name}</span>
+              <SendTo
+                url={r.url}
+                name={r.name}
+                targets={[
+                  { slug: "image/compress", label: "Compress" },
+                  { slug: "image/resize", label: "Resize" },
+                ]}
+              />
               <a href={r.url} download={r.name} className="btn btn-primary shrink-0 px-3 py-1.5">
                 Save
               </a>

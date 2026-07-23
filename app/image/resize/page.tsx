@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Dropzone from "@/components/Dropzone";
 import ToolShell from "@/components/ToolShell";
+import { useHandoff } from "@/lib/handoff";
 
 type Src = { file: File; img: HTMLImageElement };
 
@@ -31,6 +32,8 @@ export default function ResizeImage() {
     setH(img.naturalHeight);
     setUrl(null);
   }
+
+  useHandoff(pick);
 
   function setWidth(next: number) {
     setW(next);
