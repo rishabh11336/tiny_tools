@@ -24,6 +24,7 @@ export const tools: Tool[] = [
   { slug: "image/crop", name: "Crop Image", desc: "Trim to a selected area.", group: "Image", ready: true },
   { slug: "image/rotate", name: "Rotate / Flip Image", desc: "Turn or mirror an image.", group: "Image", ready: true },
   { slug: "image/remove-bg", name: "Remove Background", desc: "Erase the background in-browser.", group: "Image", ready: true },
+  { slug: "image/upscale", name: "Upscale Image", desc: "Enlarge 2×/4× with AI super-resolution.", group: "Image", ready: true },
   { slug: "image/palette", name: "Color Palette", desc: "Extract dominant colors.", group: "Image", ready: true },
   { slug: "image/exif", name: "Strip EXIF", desc: "Remove metadata for privacy.", group: "Image", ready: true },
   { slug: "image/favicon", name: "Favicon Generator", desc: "Build a multi-size .ico.", group: "Image", ready: true },
