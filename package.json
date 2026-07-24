@@ -12,6 +12,8 @@
     "@ffmpeg/ffmpeg": "^0.12.15",
     "@ffmpeg/util": "^0.12.2",
     "@imgly/background-removal": "^1.7.0",
+    "@tensorflow/tfjs": "^4.11.0",
+    "@upscalerjs/esrgan-medium": "^1.0.0",
     "browser-image-compression": "^2.0.2",
     "fflate": "^0.8.3",
     "mupdf": "^1.28.0",
@@ -19,7 +21,8 @@
     "pdf-lib": "^1.17.1",
     "qrcode": "^1.5.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "upscaler": "^1.0.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
